@@ -328,3 +328,188 @@ label act1:
     $ sfx_stop(1.0)
 
     jump act2
+
+## ----------------------------------------------------------------------------
+##  АКТ 2. Утро в 1985-м. Инженерный быт
+## ----------------------------------------------------------------------------
+
+label act2:
+
+    centered "{size=+30}АКТ 2{/size}\n\nУтро в 1985-м. Инженерный быт"
+
+    scene bg dorm_1985 at retro with fade
+    $ bgm("dorm_1985", fadein=2.0)
+
+    "Комната советского общежития. На стенах — плакаты рок-групп и календарь за 1985 год."
+    "На столе нет ноутбуков — только деревянные линейки и огромные листы бумаги."
+
+
+    show marina u_surprised at pos_speaker
+    with quick
+    m "{i}(Резко вскакивает){/i} Ай! Кто выключил мой будильник на смартфоне?!"
+
+    hide marina
+    show alya u_surprised at pos_speaker
+    with quick
+    a "{i}(Трёт глаза){/i} Какой смартфон? Марина, ты где взяла это жуткое колючее одеяло?"
+
+    hide alya
+    show yulya u_surprised at pos_speaker
+    with quick
+    yu "Девочки... А где наши обои со звёздами? И почему нас четверо на двухъярусных железных кроватях?"
+
+    hide yulya
+    show vika u_surprised at pos_speaker
+    with quick
+    v "{i}(Подбегает к столу){/i} Так. Тише. Смотрите на календарь. «Октябрь 1985 года». Это шутка?"
+
+    hide vika
+    show marina u_thinking at pos_speaker
+    with quick
+    m "Посмотрите на этот стол! Что это за гигантские пластиковые трубы?"
+
+    hide marina
+    with quick
+    "В комнату заглядывает парень в клетчатой рубашке с весёлой улыбкой. Это Серёга."
+
+    show serega happy at pos_speaker
+    with quick
+    s "О, девчонки, проснулись! А чего тубусы на пол побросали? Архитектуру к первой паре не дочертили?"
+
+    ## --- добавлено: Серёга ведёт себя так, будто знает их сто лет ---
+    hide serega
+    with quick
+    "Серёга говорит так, будто они знакомы сто лет. Девочки переглядываются."
+
+    show alya u_thinking at pos_speaker
+    with quick
+    a "Ту... тубусы? Это вот эти трубы?"
+
+    hide alya
+    show serega normal at pos_speaker
+    with quick
+    s "Ну да. Чертежи ватманские внутри. И не забудьте свои готовальни, без циркуля на начерталке делать нечего. Да, и логарифмические линейки захватите, калькуляторы на весь поток — дефицит."
+
+    hide serega
+    show vika u_surprised at pos_speaker
+    with quick
+    v "{i}(Шёпотом Але){/i} Готовальни? Логарифмические линейки? Они чертят руками без AutoCAD?!"
+
+    hide vika
+    show marina u_normal at pos_speaker
+    with quick
+    m "{i}(Шёпотом){/i} Похоже на то. Девчата, подыграем. Нам же нужны были факты."
+
+    hide marina
+    show yulya u_thinking at pos_speaker
+    with quick
+    yu "Серёж, а... чем тут обычно завтракают? Мы спросонья ничего не соображаем."
+
+    hide yulya
+    show serega happy at pos_speaker
+    with quick
+    s "Да как всегда! Либо по-быстрому в комнате, либо в буфет бежать. На плите чайник закипел, там девчонки делятся запасами."
+
+    hide serega
+    with quick
+    "Что взять на завтрак?"
+
+    menu:
+        "Докторская колбаса с батоном (быстро, сытно, классика общаги)":
+            $ breakfast = "kolbasa"
+
+            "Девочки режут батон прямо на чертёжных листах и делают бутерброды с докторской колбасой."
+            show marina u_happy at pos_speaker
+            with quick
+            m "Колбаса с батоном — и это завтрак? Вкусно, между прочим!"
+            hide marina
+            show serega happy at pos_speaker
+            with quick
+            s "Настоящий общажный завтрак! Быстро, сытно — и бегом на пару."
+
+        "Плавленый сырок «Дружба» и чай (экономно, традиционно)":
+            $ breakfast = "syrok"
+
+            hide serega
+            with quick
+            "Серёга приносит с плиты чайник. Девочки разворачивают плавленые сырки и разливают чай по гранёным стаканам."
+            show vika u_thinking at pos_speaker
+            with quick
+            v "Сырок «Дружба» и чай... Экономно."
+            hide vika
+            show serega happy at pos_speaker
+            with quick
+            s "По-студенчески: дёшево и привычно. Пей, пока горячий!"
+
+
+    hide serega
+    with quick
+    "Аля торопливо шарит по карманам и по столу."
+    show alya u_thinking at pos_speaker
+    with quick
+    a "Мой карандаш... Куда он делся?"
+    hide alya
+    show serega normal at pos_speaker
+    with quick
+    s "Опять потеряла? Держи, у меня запасной — простой, деревянный. Механических у нас не водится."
+    hide serega
+    show alya u_surprised at pos_speaker
+    with quick
+    a "{i}(Вертит карандаш в руках){/i} Спасибо... Он же даже не выдвигается!"
+    hide alya
+    show serega normal at pos_speaker
+    with quick
+    s "Так его перочинным ножом точат! Всё, хватит копаться, побежали!"
+
+    hide serega
+    with quick
+    "Девочки выбегают на улицу вслед за Серёгой. На улице прохладно, туман."
+
+    scene bg street_1985 at retro with fade
+
+    show yulya u_surprised at pos_speaker
+    with quick
+    yu "Ого... Ни одной иномарки. Одни круглые автобусы и «Жигули»."
+
+    hide yulya
+    show vika u_thinking at pos_speaker
+    with quick
+    v "Глядите, люди стоят у киоска и читают бумажные газеты «Правда» и «Труд». Никто не залипает в экраны."
+
+    hide vika
+    show serega happy at pos_speaker
+    with quick
+    s "Наш ЛиАЗ подъехал! Шевелитесь, а то штурмом брать придётся!"
+
+    ## --- Автобус ---
+    hide serega
+    with quick
+    "Они затискиваются в жёлтый ЛиАЗ-677. Автобус громко звенит бутылками на ухабах."
+
+    scene bg bus_1985 at retro with fade
+    $ sfx("bus_bells", loop=True)
+    with hpunch
+
+    show marina u_surprised at pos_speaker
+    with quick
+    m "{i}(Держится за поручень){/i} Ого, как его трясёт! А где тут валидатор? Как платить?"
+
+    hide marina
+    show serega normal at pos_speaker
+    with quick
+    s "Какой валидатор? Вон касса механическая. Бросаешь 5 копеек в щель и сама крутишь ручку, чтобы оторвать билет. Всё на честности, девчонки."
+
+    hide serega
+    show alya u_surprised at pos_speaker
+    with quick
+    a "Пять копеек... Проезд стоит пять копеек?!"
+
+    with vpunch
+    hide alya
+    show serega happy at pos_speaker
+    with quick
+    s "Ну да. А сколько, по-вашему? Рубль, что ли? Ладно, выходим, вон наш политех!"
+
+    $ sfx_stop(0.5)
+    jump act3
+
