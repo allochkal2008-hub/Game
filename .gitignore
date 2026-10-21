@@ -19,13 +19,23 @@ ENV/
 
 # macOS
 .DS_Store
+**/.DS_Store
 
 # Python build / packaging
 build/
 dist/
 *.egg-info/
 
-# Test / coverage
+# Testing / coverage
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# mypy
+.mypy_cache/
+
+# Ruff
+.ruff_cache/
