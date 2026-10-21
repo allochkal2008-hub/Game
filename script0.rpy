@@ -2,17 +2,17 @@
 ##  НАСТРОЙКИ
 ## ----------------------------------------------------------------------------
 
-define SPRITE_ZOOM = 1.0      # общий масштаб спрайтов
-define MUSIC_ON = False       # фоновая музыка: False — выключена, True — включить
+define SPRITE_ZOOM = 0.8      # общий масштаб спрайтов (1.0 = исходный размер)
+define MUSIC_ON = True        # фоновая музыка: True — включена, False — выключена
 
 
 ## --- Персонажи --------------------------------------------------------------
-define m  = Character("Марина", color="#ff8fa8")
-define a  = Character("Аля", color="#8fd3ff")
-define v  = Character("Вика", color="#b6f08f")
-define yu = Character("Юля", color="#ffd98f")
-define s  = Character("Серёга", color="#f4a261")
-define t  = Character("Тамара Ивановна", color="#ff6b6b")
+define m  = Character("Марина", color="#B22222")
+define a  = Character("Аля", color="#B22222")
+define v  = Character("Вика", color="#B22222")
+define yu = Character("Юля", color="#B22222")
+define s  = Character("Серёга", color="#B22222")
+define t  = Character("Тамара Ивановна", color="#B22222")
 
 ## --- Переходы ---------------------------------------------------------------
 define flash = Fade(0.1, 0.0, 0.8, color="#ffffff")
@@ -20,7 +20,6 @@ define slow_fade = Fade(1.0, 0.5, 1.0)
 define quick = Dissolve(0.2)       # смена говорящего
 
 ## --- Позиция спрайта ---------------------------------------------------------
-## На экране виден только тот, кто сейчас говорит: он стоит по центру.
 transform pos_speaker:
     xalign 0.5 yalign 1.0
     zoom SPRITE_ZOOM
@@ -329,6 +328,7 @@ label act1:
 
     jump act2
 
+
 ## ----------------------------------------------------------------------------
 ##  АКТ 2. Утро в 1985-м. Инженерный быт
 ## ----------------------------------------------------------------------------
@@ -513,3 +513,297 @@ label act2:
     $ sfx_stop(0.5)
     jump act3
 
+
+## ----------------------------------------------------------------------------
+##  АКТ 3. День в ВУЗе. Идеология и обед за копейки
+## ----------------------------------------------------------------------------
+
+label act3:
+
+    centered "{size=+30}АКТ 3{/size}\n\nДень в ВУЗе. Идеология и обед за копейки"
+
+    scene bg polytech_hall at retro with fade
+
+    "Коридоры политехнического института. На стенах — лозунги «Учиться, учиться и учиться!»."
+    "Вокруг полно студентов в строгих костюмах и скромных платьях."
+
+    ## --- Лекция ---
+    scene bg lecture_hall at retro with fade
+    "Они заходят в огромную лекционную аудиторию. На доске написано: «История КПСС. Тема: Развитой социализм»."
+
+
+    show vika u_thinking at pos_speaker
+    with quick
+    v "{i}(Тихо){/i} История КПСС... Это как наши «Основы государственности», только с уклоном в партию?"
+
+    hide vika
+    show alya u_normal at pos_speaker
+    with quick
+    a "Точно. Смотри, профессор за каждый прогул грозится деканские выговоры выписать. Никакого свободного посещения."
+
+    hide alya
+    show yulya u_sleepy at pos_speaker
+    with quick
+    yu "И никаких презентаций в PowerPoint. Только мел, огромная доска и монотонный голос преподавателя. Где же мой DeepSeek..?"
+
+    ## --- добавлено: Вика начинает записывать ---
+    hide yulya
+    with quick
+    "Вика достаёт блокнот и украдкой записывает: «посещаемость — строго, доска и мел, обязательная История КПСС»."
+
+    ## --- Столовая ---
+    "После двух пар лекций девочки вместе с Серёгой идут в студенческую столовую. Шум, звон тарелок, запах выпечки."
+
+    scene bg canteen at retro with fade
+    $ sfx("canteen_noise", loop=True)
+
+    show marina u_surprised at pos_speaker
+    with quick
+    m "Так, у меня в кармане куртки нашлась советская монета — ровно 50 копеек. На что хватит?"
+
+    hide marina
+    with quick
+    "Что выбрать на обед?"
+
+    menu:
+        "Гороховый суп, котлета с пюре и компот (35 копеек — сытный студенческий обед)":
+            $ lunch = "soup"
+            $ coins_left = 15
+
+            "Девочки берут подносы и садятся за липкий деревянный стол."
+            show marina u_happy at pos_speaker
+            with quick
+            m "Сдача — 15 копеек. Это же целых три поездки на автобусе!"
+
+        "Борщ, отварные сосиски и пирожок с капустой (48 копеек — роскошно, впритык)":
+            $ lunch = "borsch"
+            $ coins_left = 2
+
+            hide marina
+            with quick
+            "Девочки берут подносы и садятся за липкий деревянный стол."
+            show marina u_happy at pos_speaker
+            with quick
+            m "Сдачи — две копейки. Впритык! Зато какой обед!"
+
+    hide marina
+    show vika u_thinking at pos_speaker
+    with quick
+    v "Слушай, Серёга, а если стипендия всего 40 рублей, то на столовую уходит приличная часть?"
+
+    hide vika
+    show serega normal at pos_speaker
+    with quick
+    s "Ну, если каждый день шиковать, то да. Но у нас многие повышенную получают — 50 рублей. А отличники — Ленинскую, целых 100 рублей! Это вообще бешеные деньги."
+
+    hide serega
+    show marina u_thinking2 at pos_speaker
+    with quick
+    m "А если не хватает?"
+
+    hide marina
+    show serega happy at pos_speaker
+    with quick
+    s "Тогда летом все в ССО — Студенческие строительные отряды. Мы в прошлом году коровники в Сибири строили. За два месяца — 600 рублей чистыми! Я себе магнитофон купил и джинсы у фарцовщиков."
+
+    hide serega
+    show alya u_surprised at pos_speaker
+    with quick
+    a "Шестьсот рублей за лето?! Это же несколько инженерных зарплат!"
+
+    hide alya
+    show serega normal at pos_speaker
+    with quick
+    s "Ну так в ССО пахать надо от зари до зари. Зато романтика: форма с нашивками, песни у костра. Это вам не осенняя картошка."
+
+    hide serega
+    show yulya u_thinking2 at pos_speaker
+    with quick
+    yu "А что не так с картошкой?"
+
+    hide yulya
+    show serega normal at pos_speaker
+    with quick
+    s "Да ну, в сентябре вместо учёбы весь институт на три недели в колхоз отправляют. Грязь, дождь, собираешь вёдрами эту картошку. Хотя весело, конечно, пары-то отменяют!"
+
+    hide serega
+    show vika u_happy at pos_speaker
+    with quick
+    v "{i}(Записывает в блокнот){/i} Так, отмена пар ради уборки урожая... Записала."
+
+    hide vika
+    show serega serious at pos_speaker
+    with quick
+    s "Главное — институт окончить нормально. А то распределение пугает. Куда Родина пошлёт на 3 года отрабатывать — туда и поедешь. Хоть на Сахалин."
+
+    hide serega
+    show marina u_surprised at pos_speaker
+    with quick
+    m "{i}(Шёпотом Але){/i} Распределение? То есть они не сами ищут работу на HeadHunter?"
+
+    hide marina
+    show alya u_thinking at pos_speaker
+    with quick
+    a "{i}(Шёпотом){/i} Кажется, государство гарантирует работу, но отнимает право выбора."
+
+    ## --- добавлено: мостик к вечеру ---
+    hide alya
+    show serega happy at pos_speaker
+    with quick
+    s "Ладно, хватит о грустном! Вечером в общаге все собираются — пошли с нами, расскажете, откуда вы такие странные."
+
+    $ sfx_stop(1.0)
+    jump act4
+
+
+## ----------------------------------------------------------------------------
+##  АКТ 4. Вечер в общаге. Перестройка и финал
+## ----------------------------------------------------------------------------
+
+label act4:
+
+    centered "{size=+30}АКТ 4{/size}\n\nВечер в общаге. Перестройка и финал"
+
+    scene bg dorm_corridor_evening at retro with fade
+    $ bgm("tape_music", fadein=2.0)
+
+    "Общежитие, вечер. В коридоре пахнет жареной картошкой."
+    "Из чьей-то комнаты тихо играет кассетный магнитофон: «Перемен требуют наши сердца...»."
+
+
+    show yulya u_happy at pos_speaker
+    with quick
+    yu "Ребята в соседней комнате чертят, а девчонки на кухне одну сковородку картошки на весь этаж делят. Коллективизм!"
+
+    ## --- добавлено: callback на выбор обеда ---
+    if lunch == "soup":
+        show yulya u_happy at pos_speaker
+        yu "А я всё ещё вспоминаю тот гороховый суп за 35 копеек. Вот это я понимаю — обед!"
+    else:
+        show yulya u_happy at pos_speaker
+        yu "А я всё ещё вспоминаю тот борщ с пирожком за 48 копеек. Роскошь — но оно того стоило!"
+
+    hide yulya
+    show marina u_thinking at pos_speaker
+    with quick
+    m "Смотрите, тут из развлечений — только гитара и настольный теннис в фойе. И никаких чатов в телеграме."
+
+    hide marina
+    show alya u_happy at pos_speaker
+    with quick
+    a "Зато люди общаются вживую, а не сидят по углам в наушниках. А мне бы сейчас и хотелось музыку послушать…"
+
+    hide alya
+    show vika u_happy at pos_speaker
+    with quick
+    v "Я собрала идеальный материал для проекта. Смотрите, какая контрастная таблица получается!"
+
+    hide vika
+    with quick
+    "Вдруг в коридоре раздаётся грозный голос коменданта."
+
+    t "Десять минут до одиннадцати! Гости, на выход! Закрываю общежитие!"
+
+    show marina u_surprised at pos_speaker
+    with quick
+    m "Ой, Серёга, нам пора! А то запрёт, и кукуй на улице."
+
+    hide marina
+    show serega happy at pos_speaker
+    with quick
+    s "Да ладно вам, Тамара Ивановна строгая, но отходчивая. Ладно, девчонки, удачи с вашей начерталкой!"
+
+    ## --- добавлено: тёплое прощание ---
+    hide serega
+    show alya u_happy at pos_speaker
+    with quick
+    a "Серёж, спасибо за всё. Правда."
+    hide alya
+    show serega happy at pos_speaker
+    with quick
+    s "Да пустяки! Заходите ещё — у нас тут всегда весело."
+
+    ## --- Возвращение ---
+    scene bg dorm_1985 at retro with fade
+    "Девочки забегают в свою комнату."
+
+    $ sfx("clock_chime")
+    "Часы бьют 23:00."
+    $ sfx("door_lock")
+    "Дверь общаги закрывается с тяжёлым металлическим щелчком."
+    "Комната начинает кружиться."
+
+    $ bgm(None, fadeout=0.5)
+    scene black with flash
+    $ sfx("alarm", loop=True)
+    pause 1.0
+
+    jump ending
+
+
+## ----------------------------------------------------------------------------
+##  ФИНАЛ
+## ----------------------------------------------------------------------------
+
+label ending:
+
+    scene bg room_modern_morning with flash
+
+    "Современная комната Марины. Солнечное утро. На экране ноутбука открыта пустая презентация."
+
+
+    show marina surprised at pos_speaker
+    with quick
+    m "{i}(Просыпается на клавиатуре){/i} А-а-а! Комендантский час закончился?!"
+
+    $ sfx_stop(0.5)
+
+    hide marina
+    show alya surprised at pos_speaker
+    with quick
+    a "{i}(Смотрит на часы){/i} Девочки, девять утра!"
+
+    ## --- добавлено: карандаш из 1985 ---
+    show alya thinking at pos_speaker
+    a "Подождите... У меня в руке карандаш. Простой, деревянный. Серёгин."
+
+    hide alya
+    show yulya surprised at pos_speaker
+    with quick
+    yu "Погодите... Это был сон? Но посмотрите на экран моего ноутбука!"
+
+    hide yulya
+    with quick
+    "Все смотрят на экран. Там набрана структурированная таблица сравнения."
+
+    $ bgm("final_theme", fadein=2.0)
+    show screen comparison_table
+
+    show marina happy at pos_speaker
+    with quick
+    m "Она реальная! Вика, ты гений, ты успела всё записать во сне!"
+
+    hide marina
+    show vika happy at pos_speaker
+    with quick
+    v "Я не знаю как, но у нас есть идеальный проект. Мы не просто покажем цифры, мы расскажем историю!"
+
+    hide vika
+    show alya happy at pos_speaker
+    with quick
+    a "Собираемся, девочки. Пора получить наш заслуженный зачёт по Основам государственности!"
+
+    hide alya
+    show yulya happy at pos_speaker
+    with quick
+    yu "Должны получить не меньше десятки!"
+
+    hide yulya
+    with quick
+
+    hide screen comparison_table
+    scene black with slow_fade
+    centered "{size=+30}КОНЕЦ{/size}"
+
+    $ bgm(None, fadeout=3.0)
+    return
